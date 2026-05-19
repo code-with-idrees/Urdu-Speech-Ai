@@ -1,0 +1,203 @@
+# =============================================================================
+# Emotion Taxonomy for Urdu Poetry (Shayari) Performances
+# =============================================================================
+# This file defines the canonical 15 emotion categories used throughout the
+# annotation pipeline. Each emotion has an English ID, Urdu label, English
+# label, a short description, and example Urdu poetic keywords/themes.
+#
+# Guidelines:
+#   - Maintain exactly 15 emotion categories.
+#   - Each segment gets ONE primary emotion and an optional secondary emotion.
+#   - Add new emotions at the bottom; do NOT reorder existing IDs.
+# =============================================================================
+
+emotions:
+  # --- Original 7 ---
+
+  - id: nostalgia
+    label_ur: "حسرت"
+    label_en: "Nostalgia"
+    description: "Yearning for the past, lost love, fading memories, or bygone eras"
+    keywords_ur:
+      - "یاد"
+      - "ماضی"
+      - "وہ دن"
+      - "بچپن"
+    color: "#8B5CF6"
+
+  - id: belonging
+    label_ur: "تعلق"
+    label_en: "Belonging"
+    description: "Connection, identity, homeland, roots, and cultural pride"
+    keywords_ur:
+      - "وطن"
+      - "اپنا"
+      - "مٹی"
+      - "گھر"
+    color: "#06B6D4"
+
+  - id: joy
+    label_ur: "خوشی"
+    label_en: "Joy"
+    description: "Celebration, happiness, triumph, and festive exuberance"
+    keywords_ur:
+      - "خوشی"
+      - "جشن"
+      - "مسکراہٹ"
+      - "بہار"
+    color: "#F59E0B"
+
+  - id: sorrow
+    label_ur: "غم"
+    label_en: "Sorrow"
+    description: "Deep sadness, grief, mourning, and melancholic reflection"
+    keywords_ur:
+      - "غم"
+      - "آنسو"
+      - "درد"
+      - "تنہائی"
+    color: "#3B82F6"
+
+  - id: romance
+    label_ur: "عشق"
+    label_en: "Romance"
+    description: "Love, desire, passionate devotion, and romantic longing"
+    keywords_ur:
+      - "محبت"
+      - "عشق"
+      - "دل"
+      - "چاہت"
+    color: "#EC4899"
+
+  - id: rebellion
+    label_ur: "بغاوت"
+    label_en: "Rebellion"
+    description: "Protest, defiance, social commentary, and revolutionary spirit"
+    keywords_ur:
+      - "انقلاب"
+      - "آزادی"
+      - "ظلم"
+      - "آواز"
+    color: "#EF4444"
+
+  - id: spirituality
+    label_ur: "روحانیت"
+    label_en: "Spirituality"
+    description: "Divine connection, Sufi themes, transcendence, and mystical contemplation"
+    keywords_ur:
+      - "خدا"
+      - "روح"
+      - "فقیر"
+      - "درویش"
+    color: "#10B981"
+
+  # --- New 8 emotions for expanded 15-class taxonomy ---
+
+  - id: heartbreak
+    label_ur: "دل شکستگی"
+    label_en: "Heartbreak"
+    description: "Betrayal, shattered love, pain of separation, and emotional devastation"
+    keywords_ur:
+      - "دھوکا"
+      - "جدائی"
+      - "بے وفائی"
+      - "ٹوٹا دل"
+      - "فراق"
+    color: "#BE185D"
+
+  - id: devotion
+    label_ur: "عقیدت"
+    label_en: "Devotion"
+    description: "Unwavering loyalty, sacrifice for the beloved, selfless commitment"
+    keywords_ur:
+      - "وفا"
+      - "قربانی"
+      - "سمرپن"
+      - "نذر"
+      - "ایثار"
+    color: "#7C3AED"
+
+  - id: longing
+    label_ur: "آرزو"
+    label_en: "Longing"
+    description: "Deep desire, restless waiting, unfulfilled wishes, and pining for the absent"
+    keywords_ur:
+      - "انتظار"
+      - "آرزو"
+      - "تمنا"
+      - "حسرت"
+      - "خواہش"
+    color: "#D97706"
+
+  - id: anger
+    label_ur: "غصہ"
+    label_en: "Anger"
+    description: "Rage, frustration, fierce response to injustice, and burning indignation"
+    keywords_ur:
+      - "غصہ"
+      - "آگ"
+      - "ناانصافی"
+      - "جلن"
+      - "قہر"
+    color: "#DC2626"
+
+  - id: hope
+    label_ur: "امید"
+    label_en: "Hope"
+    description: "Optimism, resilience, dawn after darkness, and looking forward with faith"
+    keywords_ur:
+      - "امید"
+      - "سویرا"
+      - "صبح"
+      - "نئی کرن"
+      - "حوصلہ"
+    color: "#059669"
+
+  - id: melancholy
+    label_ur: "اداسی"
+    label_en: "Melancholy"
+    description: "Gentle sadness, bittersweet reflection, wistful mood, and quiet sorrow"
+    keywords_ur:
+      - "اداسی"
+      - "سناٹا"
+      - "دھندلکا"
+      - "شام"
+      - "خاموشی"
+    color: "#6366F1"
+
+  - id: pride
+    label_ur: "فخر"
+    label_en: "Pride"
+    description: "Honor, dignity, self-respect, and celebration of identity or achievement"
+    keywords_ur:
+      - "فخر"
+      - "عزت"
+      - "سر بلندی"
+      - "غیرت"
+      - "وقار"
+    color: "#CA8A04"
+
+  - id: despair
+    label_ur: "مایوسی"
+    label_en: "Despair"
+    description: "Hopelessness, existential grief, surrender, and the darkness of the soul"
+    keywords_ur:
+      - "مایوسی"
+      - "اندھیرا"
+      - "تباہی"
+      - "بربادی"
+      - "ہار"
+    color: "#475569"
+
+# =============================================================================
+# To add a new emotion, copy this template:
+#
+#   - id: <unique_snake_case_id>
+#     label_ur: "<اردو لیبل>"
+#     label_en: "<English Label>"
+#     description: "<One-line description>"
+#     keywords_ur:
+#       - "<keyword1>"
+#       - "<keyword2>"
+#     color: "<hex_color>"
+# =============================================================================

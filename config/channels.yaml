@@ -1,0 +1,21 @@
+# =============================================================================
+# YouTube Channels & Videos — Pakistani Urdu Poetry
+# =============================================================================
+# PASTE YOUR YOUTUBE LINKS HERE!
+#
+# Since the focus is entirely on Pakistani poets, please add links for:
+# Faiz Ahmed Faiz, Parveen Shakir, Ahmad Faraz, Jaun Elia, Habib Jalib,
+# Amjad Islam Amjad, Tehzeeb Hafi, Ali Zaryoun, etc.
+#
+# TEMPLATE:
+#
+# poets:
+#   - name: "Poet Name"
+#     videos:
+#       - url: "https://www.youtube.com/watch?v=VIDEO_ID"
+#         title: "Performance Title"
+#         emotion_hint: "emotion_id" # e.g., heartbreak, romance, rebellion
+# =============================================================================
+
+poets:
+  # Add your Pakistani poet YouTube links here like the template above!

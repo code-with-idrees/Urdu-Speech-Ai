@@ -1,2 +1,39 @@
+# =============================================================================
+# Urdu Speech AI — Python Dependencies
+# =============================================================================
+
+# --- Audio Download ---
 yt-dlp
+
+# --- Audio Processing ---
 pydub
+librosa
+soundfile
+numpy
+
+# --- ASR / Transcription ---
+openai-whisper
+torch
+torchaudio
+
+# --- AI Annotation (Gemini) ---
+google-generativeai
+
+# --- ML / Dataset ---
+transformers
+datasets
+pandas
+
+# --- Evaluation ---
+jiwer
+
+# --- Visualization ---
+matplotlib
+seaborn
+
+# --- Config & Environment ---
+pyyaml
+python-dotenv
+
+# --- Utilities ---
+tqdm

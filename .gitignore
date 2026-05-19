@@ -34,3 +34,19 @@ venv.bak/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# Environment secrets
+.env
+
+# Pipeline outputs (large / generated)
+logs/
+models/
+results/
+data/raw/
+data/segments/
+data/processed/
+data/annotations/
+
+# Binaries
+ffmpeg.exe
+ffprobe.exe

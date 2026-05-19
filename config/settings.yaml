@@ -1,0 +1,61 @@
+# =============================================================================
+# Global Project Settings — Urdu Speech AI
+# =============================================================================
+
+# --- Paths (relative to project root) ----------------------------------------
+paths:
+  raw_audio: "data/raw"
+  segments: "data/segments"
+  processed: "data/processed"
+  annotations: "data/annotations"
+  models: "models"
+  results: "results"
+
+# --- Audio Processing --------------------------------------------------------
+audio:
+  # Target format for all processed audio
+  sample_rate: 16000        # Hz — standard for speech models
+  channels: 1               # Mono
+  format: "wav"             # Output format for processed files
+  bit_depth: 16             # Bits per sample
+
+  # Segmentation
+  segment_duration_sec: 60  # Length of each audio segment in seconds
+  segment_overlap_sec: 5    # Overlap between consecutive segments
+  min_segment_duration_sec: 30  # Discard segments shorter than this
+
+  # Download
+  download_codec: "mp3"
+  download_quality: "192"   # kbps
+  ffmpeg_location: "."      # Relative to project root (ffmpeg.exe is there)
+
+# --- Transcription (Whisper) -------------------------------------------------
+transcription:
+  model_name: "large-v3"    # Options: tiny, base, small, medium, large, large-v3
+  language: "ur"            # Urdu ISO 639-1 code
+  device: "cpu"             # "cpu" locally; use "cuda" on Kaggle/Colab
+  batch_size: 16
+
+# --- Emotion Annotation (Gemini) ---------------------------------------------
+annotation:
+  gemini_model: "gemini-2.0-flash"   # Cost-efficient for classification
+  max_retries: 3
+  temperature: 0.3          # Low temperature for consistent labeling
+  min_confidence: 0.6       # Discard AI labels below this confidence
+
+# --- Dataset -----------------------------------------------------------------
+dataset:
+  train_split: 0.80
+  val_split: 0.10
+  test_split: 0.10
+  min_samples_per_emotion: 50   # Minimum for balanced training
+  output_format: "huggingface"  # "huggingface" or "csv"
+
+# --- Evaluation (4D Benchmark) -----------------------------------------------
+evaluation:
+  num_human_eval_samples: 100
+  metrics:
+    - clarity
+    - fluency
+    - accent_authenticity
+    - language_distance
