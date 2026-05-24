@@ -15,15 +15,7 @@ venv.bak/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Audio and video files
-*.mp3
-*.wav
-*.flac
-*.m4a
-*.mp4
-*.mkv
-
-# Data files
+# Data files (except audio)
 *.csv
 *.dat
 *.out
@@ -35,18 +27,16 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Environment secrets
-.env
-
-# Pipeline outputs (large / generated)
-logs/
-models/
-results/
-data/raw/
-data/segments/
-data/processed/
-data/annotations/
-
 # Binaries
 ffmpeg.exe
 ffprobe.exe
+
+# Do NOT ignore audio files; they are tracked via Git LFS.
+
+# Ignore auxiliary files not needed in repo
+# Project metadata and intermediate artifacts
+/data/.commit_manifest.json
+/data/raw.zip
+/data/raw/manifest.json
+list_of_yt_videos_of_shayri.txt
+~$eech_AI_Urdu_Project_Proposal.docx

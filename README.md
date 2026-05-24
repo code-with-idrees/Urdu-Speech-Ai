@@ -1,14 +1,14 @@
-<![CDATA[<div align="center">
+<div align="center">
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════════╗
 ║                                                                          ║
-║     ██╗   ██╗██████╗ ██████╗ ██╗   ██╗    ███████╗██████╗ ███████╗      ║
-║     ██║   ██║██╔══██╗██╔══██╗██║   ██║    ██╔════╝██╔══██╗██╔════╝      ║
-║     ██║   ██║██████╔╝██║  ██║██║   ██║    ███████╗██████╔╝█████╗        ║
-║     ██║   ██║██╔══██╗██║  ██║██║   ██║    ╚════██║██╔═══╝ ██╔══╝        ║
-║     ╚██████╔╝██║  ██║██████╔╝╚██████╔╝    ███████║██║     ███████╗      ║
-║      ╚═════╝ ╚═╝  ╚═╝╚═════╝  ╚═════╝     ╚══════╝╚═╝     ╚══════╝      ║
+║     ██╗   ██╗██████╗ ██████╗ ██╗   ██╗    ███████╗██████╗ ███████╗       ║
+║     ██║   ██║██╔══██╗██╔══██╗██║   ██║    ██╔════╝██╔══██╗██╔════╝       ║
+║     ██║   ██║██████╔╝██║  ██║██║   ██║    ███████╗██████╔╝█████╗         ║
+║     ██║   ██║██╔══██╗██║  ██║██║   ██║    ╚════██║██╔═══╝ ██╔══╝         ║
+║     ╚██████╔╝██║  ██║██████╔╝╚██████╔╝    ███████║██║     ███████╗       ║
+║      ╚═════╝ ╚═╝  ╚═╝╚═════╝  ╚═════╝     ╚══════╝╚═╝     ╚══════╝       ║
 ║                                                                          ║
 ║              █████╗ ██╗                                                  ║
 ║             ██╔══██╗██║                                                  ║
@@ -40,7 +40,7 @@
 
 ---
 
-```
+```text
 🎙️ YouTube → 🎵 Audio → ✂️ Segments → 🧹 Clean → 📝 Transcribe → 💭 Emotion → 📊 Dataset
 ```
 
@@ -48,11 +48,33 @@
 
 ---
 
+## 📑 Table of Contents
+
+- [📌 Why This Project Exists](#-why-this-project-exists)
+- [🏗️ Pipeline Architecture](#-pipeline-architecture)
+- [💭 Emotion Taxonomy (15 Classes)](#-emotion-taxonomy-15-classes)
+- [📊 4D Benchmark Evaluation](#-4d-benchmark-evaluation)
+- [📂 Repository Structure](#-repository-structure)
+- [🚀 Getting Started](#-getting-started)
+  - [⚡ Local Environment (Windows/Linux/Mac)](#-local-environment)
+  - [☁️ Google Colab (GPU-Accelerated)](#-google-colab)
+- [⚙️ Configuration](#️-configuration)
+- [📦 Dataset Output Format](#-dataset-output-format)
+- [🎵 Audio Data & Storage Strategy](#-audio-data--storage-strategy)
+- [🔬 Methodology & Data Sources](#-methodology--data-sources)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📖 Detailed Script Usage](#-detailed-script-usage)
+- [🤝 Contributing](#-contributing)
+- [📈 Project Roadmap](#-project-roadmap)
+- [📄 License & Acknowledgements](#-license--acknowledgements)
+
+---
+
 ## 📌 Why This Project Exists
 
-There is **no existing emotion-rich speech dataset** built from Urdu poetry performances. Urdu *Shayari* is unique — poets don't just recite, they **perform** with deliberate emotional delivery: heartbreak in a *ghazal*, rebellion in a *nazm*, divine longing in Sufi *kalam*. This project captures that.
+There is **no existing emotion-rich speech dataset** built from Urdu poetry performances. Urdu *Shayari* is unique — poets don't just recite, they **perform** with deliberate emotional delivery: heartbreak in a *ghazal*, rebellion in a *nazm*, divine longing in Sufi *kalam*. This project captures that essence and converts it into a machine-learning-ready format.
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │                  THE PROBLEM WE SOLVE                        │
 ├──────────────────────────────────────────────────────────────┤
@@ -81,32 +103,37 @@ There is **no existing emotion-rich speech dataset** built from Urdu poetry perf
 
 ## 🏗️ Pipeline Architecture
 
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        URDU SPEECH AI PIPELINE                          │
-├─────────────────────────────────────────────────────────────────────────┤
-│                                                                         │
-│  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐          │
-│  │  Step 1   │    │  Step 2   │    │  Step 3   │    │  Step 4   │          │
-│  │          │    │          │    │          │    │          │          │
-│  │ DOWNLOAD │───▶│ SEGMENT  │───▶│  CLEAN   │───▶│TRANSCRIBE│          │
-│  │          │    │          │    │          │    │          │          │
-│  │ yt-dlp   │    │ VAD-aware│    │ 16kHz    │    │ Whisper  │          │
-│  │ YouTube  │    │ 60s cuts │    │ mono WAV │    │ large-v3 │          │
-│  └──────────┘    └──────────┘    └──────────┘    └────┬─────┘          │
-│                                                       │                │
-│                                                       ▼                │
-│  ┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐          │
-│  │  Step 7   │    │  Step 6   │    │  Step 5   │    │  Urdu    │          │
-│  │          │    │          │    │          │    │ Transcript│          │
-│  │ EVALUATE │◀───│  BUILD   │◀───│ ANNOTATE │◀───│          │          │
-│  │          │    │ DATASET  │    │ EMOTIONS │    │  اردو     │          │
-│  │ 4D Score │    │ HF-ready │    │  Gemini  │    │  شاعری   │          │
-│  └──────────┘    └──────────┘    └──────────┘    └──────────┘          │
-│                                                                         │
-│  ═══════════════════════════════════════════════════════════════════    │
-│  OUTPUT: Train/Val/Test splits with audio + transcript + emotion       │
-└─────────────────────────────────────────────────────────────────────────┘
+This repository operates as a comprehensive, multi-stage data engine.
+
+```mermaid
+flowchart TD
+    subgraph Data Acquisition
+    A[YouTube URLs\nconfig/channels.yaml] -->|yt-dlp| B(Raw Audio\nMP3 / M4A)
+    end
+    
+    subgraph Processing & Segmentation
+    B -->|librosa / VAD| C(Audio Segments\n60s Chunks)
+    C -->|ffmpeg| D(Normalized Audio\n16kHz Mono, -20dB)
+    end
+    
+    subgraph AI Inference
+    D -->|Whisper large-v3| E(Urdu Transcription)
+    E -->|Gemini 2.0 Flash| F(Emotion Annotation)
+    end
+    
+    subgraph Output & Validation
+    F -->|pandas / datasets| G(Stratified Dataset\nTrain/Val/Test)
+    G -->|Custom Metrics| H(4D Benchmark Evaluation)
+    end
+
+    style A fill:#f97316,stroke:#ea580c,stroke-width:2px,color:#fff
+    style B fill:#3b82f6,stroke:#2563eb,stroke-width:2px,color:#fff
+    style C fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
+    style D fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff
+    style E fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px,color:#fff
+    style F fill:#ec4899,stroke:#db2777,stroke-width:2px,color:#fff
+    style G fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff
+    style H fill:#14b8a6,stroke:#0d9488,stroke-width:2px,color:#fff
 ```
 
 ### Pipeline Steps at a Glance
@@ -127,22 +154,22 @@ There is **no existing emotion-rich speech dataset** built from Urdu poetry perf
 
 Our emotion taxonomy is specifically designed for Urdu poetry performances, capturing the cultural and linguistic nuances unique to *Shayari*:
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────────┐
 │                 🎭 EMOTION TAXONOMY — 15 CLASSES                 │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │  ◆ ORIGINAL CORE (7)                                             │
-│  ├── حسرت    Nostalgia      yearning for the past               │
+│  ├── حسرت    Nostalgia      yearning for the past                │
 │  ├── تعلق    Belonging      homeland, roots, identity            │
 │  ├── خوشی    Joy            celebration, triumph                 │
-│  ├── غم      Sorrow         grief, mourning                     │
-│  ├── عشق    Romance        love, desire, devotion               │
+│  ├── غم      Sorrow         grief, mourning                      │
+│  ├── عشق     Romance        love, desire, devotion               │
 │  ├── بغاوت   Rebellion      protest, defiance                    │
 │  └── روحانیت Spirituality   Sufi themes, transcendence           │
 │                                                                  │
 │  ◆ EXPANDED (8)                                                  │
-│  ├── دل شکستگی Heartbreak   betrayal, separation                │
+│  ├── دل شکستگی Heartbreak   betrayal, separation                 │
 │  ├── عقیدت   Devotion       loyalty, sacrifice                   │
 │  ├── آرزو    Longing        restless waiting, pining             │
 │  ├── غصہ     Anger          rage, indignation                    │
@@ -153,9 +180,6 @@ Our emotion taxonomy is specifically designed for Urdu poetry performances, capt
 │                                                                  │
 └──────────────────────────────────────────────────────────────────┘
 ```
-
-<details>
-<summary>📋 Full Emotion Table with Color Codes & Keywords</summary>
 
 | ID | اردو | English | Description | Keywords | Color |
 |:---|:-----|:--------|:------------|:---------|:------|
@@ -175,38 +199,36 @@ Our emotion taxonomy is specifically designed for Urdu poetry performances, capt
 | `pride` | فخر | Pride | Honor, dignity, self-respect | فخر، عزت، سر بلندی، وقار | 🟡 `#CA8A04` |
 | `despair` | مایوسی | Despair | Hopelessness, existential grief, surrender | مایوسی، اندھیرا، تباہی | ⚫ `#475569` |
 
-</details>
-
 ---
 
 ## 📊 4D Benchmark Evaluation
 
 Every dataset produced by this pipeline is evaluated on **four dimensions** specifically designed for Urdu speech quality:
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                    4D BENCHMARK FRAMEWORK                            ║
 ╠══════════════════════════════════════════════════════════════════════╣
 ║                                                                      ║
-║  ┌─────────────────────┐   ┌─────────────────────┐                  ║
-║  │  1 ░ CLARITY        │   │  2 ░ FLUENCY        │                  ║
-║  │                     │   │                     │                  ║
-║  │  Word Error Rate    │   │  Pause distribution │                  ║
-║  │  (WER via jiwer)    │   │  & rhythm analysis  │                  ║
-║  │  How intelligible   │   │  How natural the    │                  ║
-║  │  is the speech?     │   │  flow of speech is  │                  ║
-║  └─────────────────────┘   └─────────────────────┘                  ║
+║  ┌─────────────────────┐   ┌─────────────────────┐                   ║
+║  │  1 ░ CLARITY        │   │  2 ░ FLUENCY        │                   ║
+║  │                     │   │                     │                   ║
+║  │  Word Error Rate    │   │  Pause distribution │                   ║
+║  │  (WER via jiwer)    │   │  & rhythm analysis  │                   ║
+║  │  How intelligible   │   │  How natural the    │                   ║
+║  │  is the speech?     │   │  flow of speech is  │                   ║
+║  └─────────────────────┘   └─────────────────────┘                   ║
 ║                                                                      ║
-║  ┌─────────────────────┐   ┌─────────────────────┐                  ║
-║  │  3 ░ ACCENT AUTH.   │   │  4 ░ LANG DISTANCE  │                  ║
-║  │                     │   │                     │                  ║
-║  │  Urdu phoneme       │   │  Lexical distance   │                  ║
-║  │  coverage & script  │   │  from Hindi — keeps │                  ║
-║  │  marker analysis    │   │  Urdu pure & clean  │                  ║
-║  └─────────────────────┘   └─────────────────────┘                  ║
+║  ┌─────────────────────┐   ┌─────────────────────┐                   ║
+║  │  3 ░ ACCENT AUTH.   │   │  4 ░ LANG DISTANCE  │                   ║
+║  │                     │   │                     │                   ║
+║  │  Urdu phoneme       │   │  Lexical distance   │                   ║
+║  │  coverage & script  │   │  from Hindi — keeps │                   ║
+║  │  marker analysis    │   │  Urdu pure & clean  │                   ║
+║  └─────────────────────┘   └─────────────────────┘                   ║
 ║                                                                      ║
-║  Score range: 0.0 ────────────────────────── 1.0                    ║
-║               ▓▓░░░░░░░░  poor    ▓▓▓▓▓▓▓▓▓░  excellent            ║
+║  Score range: 0.0 ────────────────────────── 1.0                     ║
+║               ▓▓░░░░░░░░  poor    ▓▓▓▓▓▓▓▓▓░  excellent              ║
 ╚══════════════════════════════════════════════════════════════════════╝
 ```
 
@@ -214,7 +236,7 @@ Every dataset produced by this pipeline is evaluated on **four dimensions** spec
 
 ## 📂 Repository Structure
 
-```
+```text
 Urdu-Speech-Ai/
 │
 ├── 📁 config/                        # Configuration files (YAML)
@@ -234,7 +256,7 @@ Urdu-Speech-Ai/
 │   └── utils.py                      #   Shared utilities & helpers
 │
 ├── 📁 data/                          # Data directories (gitignored)
-│   ├── raw/                          #   Downloaded MP3 files
+│   ├── raw/                          #   Downloaded MP3 files (managed via Git LFS)
 │   ├── segments/                     #   60s audio segments
 │   ├── processed/                    #   Normalized 16kHz WAV files
 │   └── annotations/                  #   Transcript & emotion JSONs
@@ -266,29 +288,40 @@ Urdu-Speech-Ai/
 | Git LFS | 3.0+ | Large file storage for audio |
 | Gemini API Key | — | Emotion annotation ([Get one here](https://aistudio.google.com/apikey)) |
 
-### ⚡ Quick Start (Local — Windows/Linux/Mac)
+---
+
+### ⚡ Local Environment (Windows/Linux/Mac)
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/code-with-idrees/Urdu-Speech-Ai.git
 cd Urdu-Speech-Ai
 
-# 2. Create & activate virtual environment (recommended)
-python -m venv .venv
-.venv\Scripts\activate          # Windows
-# source .venv/bin/activate     # Linux/Mac
+# 2. (Optional) Initialize Git LFS if you want to pull existing audio
+git lfs install
+git lfs pull
 
-# 3. Install dependencies
+# 3. Create & activate virtual environment (recommended)
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/Mac:
+source .venv/bin/activate
+
+# 4. Install dependencies
 pip install -r requirements.txt
 
-# 4. Configure environment
-copy .env.example .env          # Windows
-# cp .env.example .env          # Linux/Mac
-# Edit .env → set GEMINI_API_KEY=your_key_here
+# 5. Configure environment
+# On Windows:
+copy .env.example .env
+# On Linux/Mac:
+cp .env.example .env
 
-# 5. Add YouTube links to config/channels.yaml (see template inside)
+# Edit .env and set GEMINI_API_KEY=your_actual_key_here
 
-# 6. Run the pipeline step by step
+# 6. Add YouTube links to config/channels.yaml (see template inside)
+
+# 7. Run the pipeline step by step
 python src/batch_download.py          # Download audio
 python src/segment_audio.py           # Segment into 60s chunks
 python src/preprocess_audio.py        # Normalize audio quality
@@ -298,16 +331,18 @@ python src/build_dataset.py           # Assemble final dataset
 python src/evaluate.py --dataset results/dataset_test.json  # Evaluate
 ```
 
-### ☁️ Quick Start (Google Colab — Free GPU)
+---
+
+### ☁️ Google Colab (GPU-Accelerated)
 
 The fastest way to run the full pipeline with **GPU-accelerated transcription**:
 
-1. Upload the project folder to your Google Drive
-2. Open [`notebooks/Colab_Pipeline.ipynb`](notebooks/Colab_Pipeline.ipynb) in Colab
-3. Select **Runtime → Change runtime type → T4 GPU**
+1. Upload the project folder to your Google Drive.
+2. Open [`notebooks/Colab_Pipeline.ipynb`](notebooks/Colab_Pipeline.ipynb) in Colab.
+3. Select **Runtime → Change runtime type → T4 GPU**.
 4. Run all cells — Whisper transcription will be **10-50× faster**!
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │                  ☁️  COLAB PIPELINE                           │
 ├──────────────────────────────────────────────────────────────┤
@@ -326,7 +361,7 @@ The fastest way to run the full pipeline with **GPU-accelerated transcription**:
 
 ## ⚙️ Configuration
 
-All settings live in `config/settings.yaml`:
+All major parameters live in `config/settings.yaml`:
 
 ```yaml
 # Audio Processing
@@ -359,7 +394,7 @@ dataset:
 
 ## 📦 Dataset Output Format
 
-The pipeline produces a **HuggingFace-compatible dataset** with stratified emotion splits:
+The pipeline produces a **HuggingFace-compatible dataset** with stratified emotion splits. A sample output record:
 
 ```json
 {
@@ -374,9 +409,9 @@ The pipeline produces a **HuggingFace-compatible dataset** with stratified emoti
 }
 ```
 
-```
+```text
 ┌──────────────────────────────────────────────────────┐
-│               DATASET SPLITS                          │
+│               DATASET SPLITS                         │
 ├──────────────────────────────────────────────────────┤
 │                                                      │
 │   ████████████████████████████████████████  80%  TRAIN │
@@ -389,13 +424,13 @@ The pipeline produces a **HuggingFace-compatible dataset** with stratified emoti
 
 ---
 
-## 🎵 Audio Data & Storage
+## 🎵 Audio Data & Storage Strategy
 
-This project contains **~14 GB of raw audio** (2,490+ MP3 recordings). Audio files are managed with **Git LFS** to keep the repository lightweight while preserving all data:
+This project handles large volumes of raw audio (~14 GB / 2,490+ MP3 recordings). Audio files are managed with **Git LFS** to keep the repository lightweight:
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
-│                 AUDIO STORAGE STRATEGY                        │
+│                 AUDIO STORAGE STRATEGY                       │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │   📁 data/raw/       2,490 MP3s (~14 GB)  → Git LFS         │
@@ -409,19 +444,15 @@ This project contains **~14 GB of raw audio** (2,490+ MP3 recordings). Audio fil
 └──────────────────────────────────────────────────────────────┘
 ```
 
-> **Note for contributors:** Run `git lfs install` before cloning to ensure large files download properly.
-
 ---
 
-## 🔬 Methodology
+## 🔬 Methodology & Data Sources
 
-### Data Sources
+Audio performances are sourced from Pakistani Urdu poetry YouTube channels, featuring established poets at professional gatherings.
 
-Audio performances are sourced from Pakistani Urdu poetry YouTube channels, featuring established poets:
-
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
-│                    DATA SOURCES                               │
+│                    DATA SOURCES                              │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  🎙️ Mushaira Performances    Professional poetry gatherings  │
@@ -440,9 +471,9 @@ Audio performances are sourced from Pakistani Urdu poetry YouTube channels, feat
 └──────────────────────────────────────────────────────────────┘
 ```
 
-### Annotation Pipeline
+### Emotion Annotation Workflow
 
-```
+```text
          ┌─────────────┐
          │  Transcript  │
          │  (Urdu text) │
@@ -462,7 +493,7 @@ Audio performances are sourced from Pakistani Urdu poetry YouTube channels, feat
           ▼            ▼
    ┌────────────┐  ┌────────────┐
    │  conf ≥ 0.6│  │  conf < 0.6│
-   │  ✅ Accept  │  │  ❌ Discard │
+   │  ✅ Accept │  │  ❌ Discard│
    └────────────┘  └────────────┘
 ```
 
@@ -470,9 +501,9 @@ Audio performances are sourced from Pakistani Urdu poetry YouTube channels, feat
 
 ## 🛠️ Tech Stack
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
-│                     TECHNOLOGY STACK                          │
+│                     TECHNOLOGY STACK                         │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  AUDIO DOWNLOAD       yt-dlp + ffmpeg                        │
@@ -513,7 +544,7 @@ python src/batch_download.py --poet "Tehzeeb Hafi"  # Single poet
 python src/batch_download.py --limit 10             # First 10 only
 ```
 
-The batch downloader maintains a `manifest.json` to skip already-downloaded videos on re-runs.
+*The batch downloader maintains a `manifest.json` to skip already-downloaded videos on re-runs.*
 </details>
 
 <details>
@@ -525,7 +556,7 @@ python src/segment_audio.py --file "path/to/file"   # Single file
 python src/segment_audio.py --no-vad                # Disable VAD
 ```
 
-Segments are 60s with 5s overlap. VAD (Voice Activity Detection) finds silence boundaries to avoid cutting mid-word.
+*Segments are 60s with 5s overlap. VAD (Voice Activity Detection) finds silence boundaries to avoid cutting mid-word.*
 </details>
 
 <details>
@@ -535,7 +566,7 @@ Segments are 60s with 5s overlap. VAD (Voice Activity Detection) finds silence b
 python src/preprocess_audio.py
 ```
 
-Normalizes all segments to 16kHz mono WAV, trims leading/trailing silence, and applies loudness normalization (-20 dB target).
+*Normalizes all segments to 16kHz mono WAV, trims leading/trailing silence, and applies loudness normalization (-20 dB target).*
 </details>
 
 <details>
@@ -547,7 +578,7 @@ python src/transcribe.py --model medium             # Smaller model
 python src/transcribe.py --device cuda              # Force GPU
 ```
 
-Uses OpenAI Whisper with forced Urdu language for maximum accuracy. Falls back to CPU if CUDA unavailable.
+*Uses OpenAI Whisper with forced Urdu language for maximum accuracy. Falls back to CPU if CUDA unavailable.*
 </details>
 
 <details>
@@ -558,7 +589,7 @@ python src/annotate_emotions.py                     # Full annotation
 python src/annotate_emotions.py --dry-run           # Preview prompts
 ```
 
-Requires `GEMINI_API_KEY` in `.env`. Uses structured prompts with retry logic and rate limiting.
+*Requires `GEMINI_API_KEY` in `.env`. Uses structured prompts with retry logic and rate limiting.*
 </details>
 
 <details>
@@ -578,9 +609,9 @@ python src/evaluate.py --dataset results/dataset_test.json
 
 We welcome contributions! This project follows the **fork → branch → PR** workflow.
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
-│                  CONTRIBUTION WORKFLOW                        │
+│                  CONTRIBUTION WORKFLOW                       │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │   1. 🍴  Fork the repository                                │
@@ -628,13 +659,12 @@ We welcome contributions! This project follows the **fork → branch → PR** wo
 
 ---
 
-## 📄 License
+## 📄 License & Acknowledgements
 
+### License
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
----
-
-## 🙏 Acknowledgements
+### Acknowledgements
 
 | Project | Contribution |
 |:--------|:-------------|
@@ -649,10 +679,10 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <div align="center">
 
-```
+```text
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║   "شاعری دل کی آواز ہے"                                     ║
+║   "شاعری دل کی آواز ہے"                                       ║
 ║    Poetry is the voice of the heart.                         ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -663,4 +693,3 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 *Star ⭐ this repo if you find it useful!*
 
 </div>
-]]>
