@@ -1,0 +1,18 @@
+{
+  "threshold_mode": "strict",
+  "total_segments": 77436,
+  "clean": 60970,
+  "rejected": 7592,
+  "skipped_existing": 8874,
+  "clean_percentage": 88.93,
+  "rejection_reasons": {
+    "high_energy_std": 6226,
+    "high_spectral_flatness": 681,
+    "near_silence": 4923,
+    "low_speech_ratio": 903,
+    "high_zcr": 4938,
+    "low_spectral_flatness": 254,
+    "high_burst_rate": 4
+  },
+  "elapsed_seconds": 3108.9
+}

@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data files (except audio)
+*.csv
+*.dat
+*.out
+*.log
+*.sqlite
+*.db
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Binaries
+ffmpeg.exe
+ffprobe.exe
+
+# Ignore all large data files and models to save space and GitHub costs
+/data/
+/models/
+*.mp3
+*.wav
+*.flac
+*.pt
+
+# Ignore auxiliary files not needed in repo
+# Project metadata and intermediate artifacts
+list_of_yt_videos_of_shayri.txt
+~$eech_AI_Urdu_Project_Proposal.docx
